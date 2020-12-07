@@ -1,0 +1,115 @@
+title = "device"
+url = "/device"
+layout = "default"
+is_hidden = 0
+==
+
+<script>
+
+//get passed device id
+var queryString = window.location.search;
+var urlParams = new URLSearchParams(queryString);
+var deviceIdPassed = urlParams.get('device')
+
+GetDevices();
+
+    //perform ALAX request for data (as per search paramerets passed)
+    function GetDevices() {
+
+//create the http xml object and url
+var xmlhttp = new XMLHttpRequest();
+//var url = "data/bookings.json?ci=" + searchStart + "&co=" + searchEnd;
+var url = "http://localhost:3000/device/"+deviceIdPassed;
+
+//request
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+
+// listen for successful (200)
+xmlhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+        var myArr = JSON.parse(this.responseText);
+        console.log(this.responseText);
+        outPut(myArr);
+    }
+}
+}
+
+
+
+    //loop though array creating the outpuut string
+    function outPut(arr) {
+        var header = ""
+        var detail = ""
+        var i;
+        for (i = 0; i < arr.length; i++) {
+            arr[1]
+
+            header = "<h1>Device: "+ arr[i].device +"</h1>"
+            detail += "Version: "+ arr[i].version +"</br>"
+            detail += "Status: "+ arr[i].status +"</p>"
+        }
+        // update result div on page
+        $("#header").html(header);
+        $("#detail").html(detail);
+    }
+
+
+    window.onload = function() {
+    
+    var dataPoints = [];
+    
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        //zoomEnabled: true,
+        theme: "light2",
+        title: {
+            text: "Temperature"
+        },
+        axisY: {
+            title: "Degrees Celcius",
+            titleFontSize: 24,
+            includeZero: false,
+
+        },
+        data: [{
+            type: "line",
+            yValueFormatString: "#,### degrees",
+            dataPoints: dataPoints
+        }]
+    });
+    
+    function addData(data) {
+        for (var i = 0; i < data.length; i++) {
+            dataPoints.push({
+                x: new Date(data[i].date),
+                y: data[i].value
+            });
+        }
+        chart.render();
+    
+    }
+    
+    //$.getJSON("https://canvasjs.com/data/gallery/javascript/daily-sales-data.json", addData);
+    $.getJSON("http://localhost:3000/sensor/"+deviceIdPassed, addData);
+    
+    }
+    </script>
+
+    
+<p>
+    <div id="header"></div>
+
+    <p>View all devices <a href="{{ 'devices'|page }}">here</a></p>
+    <div id="detail"></div>
+
+
+
+
+
+
+    <h2>Current Status</h2>
+    <p>
+
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    </p>

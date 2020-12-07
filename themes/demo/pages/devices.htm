@@ -1,0 +1,135 @@
+title = "devices"
+url = "/devices"
+layout = "default"
+is_hidden = 0
+==
+{%    if user %}
+
+
+
+
+
+<script>
+
+    // my listeners (date inputs and search button)
+    $(function () {
+
+
+
+        GetDevices();
+
+        //click search - fire Ajax search
+        $("#search").on("click", function () {
+            console.log("sending");
+            SearchAvaliable(document.getElementById('deviceid').value);
+        });
+
+
+    });
+
+    //perform ALAX request for data (as per search paramerets passed)
+    function GetDevices() {
+
+        //create the http xml object and url
+        var xmlhttp = new XMLHttpRequest();
+        //var url = "data/bookings.json?ci=" + searchStart + "&co=" + searchEnd;
+        var url = "http://localhost:3000/device/";
+
+        //request
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        // listen for successful (200)
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                console.log(this.responseText);
+                outPut(myArr);
+            }
+        }
+    }
+
+    //perform ALAX request for data (as per search paramerets passed)
+    function SearchAvaliable(deviceid) {
+
+        //create the http xml object and url
+        var xmlhttp = new XMLHttpRequest();
+        //var url = "data/bookings.json?ci=" + searchStart + "&co=" + searchEnd;
+        var url = "http://localhost:3000/device/" + deviceid;
+
+        //request
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        // listen for successful (200)
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                console.log(this.responseText);
+                outPut(myArr);
+            }
+        }
+    }
+
+
+
+
+
+
+
+    //loop though array creating the outpuut string
+    function outPut(arr) {
+        var out = ""
+
+
+        out += "<table><colgroup><col style='width: 50px'><col style='width: 200px'><col style='width: 100px'><col style='width: 80px'><col style='width: 100px'></colgroup>";
+        out += "<thead><tr><th>ID</th><th>Device</th><th>Version</th><th>Status</th><th></th></tr></thead><tbody>"
+
+
+        var i;
+        for (i = 0; i < arr.length; i++) {
+            arr[1]
+
+            //out += arr[i].device;
+            //out += "</br>";
+            out += "<tr><td>" + arr[i].id + "</td><td>" + arr[i].device + "</td><td>" + arr[i].version + "</td><td>" + arr[i].status + "</td><td><a href=device?device="+ arr[i].id +">view</a></td></tr>";
+        }
+        out += "</tbody></table>";
+        // update result div on page
+        $("#results").html(out);
+    }
+
+
+
+
+
+
+</script>
+
+
+<h1>Devices</h1>
+<p>Add a new device <a href="{{ 'adddevice'|page }}">here</a></p>
+<h2>Search devices</h2>
+<p>Only device 12 has data to view</p>
+
+
+
+<form method="" action="">
+    <p>
+        <label for="deviceid">Device ID:</label>
+        <input type="text" id="deviceid" name="deviceid" minlength="1" maxlength="10" placeholder="" pattern="[0-9]"
+            required />
+        <input type="button" id="search" value="Search" />
+    </p>
+    <p>
+    <div id="results"></div>
+    </p>
+</form>
+
+
+
+{% else %}
+
+sorry, you need to sign in to see your devices
+
+{% endif %}
