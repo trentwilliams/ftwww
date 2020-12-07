@@ -92,7 +92,7 @@ is_hidden = 0
 
             //out += arr[i].device;
             //out += "</br>";
-            out += "<tr><td>" + arr[i].id + "</td><td>" + arr[i].device + "</td><td>" + arr[i].version + "</td><td>" + arr[i].status + "</td><td><a href=device?device="+ arr[i].id +">view</a></td></tr>";
+            out += "<tr><td>" + arr[i].deviceId + "</td><td>" + arr[i].device + "</td><td>" + arr[i].version + "</td><td>" + arr[i].status + "</td><td><a href=device?device="+ arr[i].deviceId +">view</a></td></tr>";
         }
         out += "</tbody></table>";
         // update result div on page
@@ -107,10 +107,10 @@ is_hidden = 0
 </script>
 
 
-<h1>Devices</h1>
+<h2>Devices</h2>
 <p>Add a new device <a href="{{ 'adddevice'|page }}">here</a></p>
-<h2>Search devices</h2>
-<p>Only device 12 has data to view</p>
+<h3>Search devices</h3>
+<p>Only device 1 has data to view</p>
 
 
 
@@ -129,7 +129,9 @@ is_hidden = 0
 
 
 {% else %}
-
-sorry, you need to sign in to see your devices
-
+<h2>Devices</h2>
+<p>
+You must be signed in to see your devices.
+</p>
+<p>Sign in <a href="{{ 'signin'|page }}">here</a></p>
 {% endif %}

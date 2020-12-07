@@ -25,19 +25,19 @@ function onStart()
         <div class="collapse navbar-collapse navbar-main-collapse">
             <ul class="nav navbar-nav">
                 <li class="separator hidden-xs"></li>
-                <li class="{% if this.page.id == 'index' %}active{% endif %}"><a href="{{ 'index'|page }}">home</a></li>
+                <li class="{% if this.page.id == 'index' %}active{% endif %}"><a href="{{ 'index'|page }}">Home</a></li>
                 
 
                 
-                <li class="{% if this.page.id == 'contact' %}active{% endif %}"><a href="{{ 'contact'|page }}">contact us</a></li>
+                <li class="{% if this.page.id == 'contact' %}active{% endif %}"><a href="{{ 'contact'|page }}">Contact Us</a></li>
                 
-                <li class="{% if this.page.id == 'devices' %}active{% endif %}"><a href="{{ 'devices'|page }}">devices</a></li>
+                <li class="{% if this.page.id == 'devices' %}active{% endif %}"><a href="{{ 'devices'|page }}">Devices</a></li>
                 {% if user %}
 
-                <li class="{% if this.page.id == 'account' %}active{% endif %}"><a href="{{ 'account'|page }}">account</a></li>
-                <li><a data-request="onLogout" data-request-data="redirect: '/signin'">sign out</a></li>
+                <li class="{% if this.page.id == 'account' %}active{% endif %}"><a href="{{ 'account'|page }}">Account</a></li>
+                <li><a data-request="onLogout" data-request-data="redirect: '/signin'">Sign out</a></li>
                 {% else %}
-                <li class="{% if this.page.id == 'signin' %}active{% endif %}"><a href="{{ 'signin'|page }}">sign in</a></li>
+                <li class="{% if this.page.id == 'signin' %}active{% endif %}"><a href="{{ 'signin'|page }}">Sign in</a></li>
                 
                 {% endif %}                
                 

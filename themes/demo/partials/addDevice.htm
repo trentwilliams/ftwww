@@ -14,20 +14,20 @@ description = "add a new device"
     <div class="form-group">
         <label class="" for="device">Device</label>
 
-        <input type="text" id="device" class="form-control" value="asdfasdf" name="device" minlength="5" maxlength="20"
+        <input type="text" id="device" class="form-control" value="" name="device" minlength="5" maxlength="20"  placeholder="Device Type / Name"
             required />
     </div>
 
     <div class="form-group">
         <label for="version">Version</label>
-        <input type="text" id="version" class="form-control" value="asdfasdf" name="version" minlength="5"
+        <input type="text" id="version" class="form-control" value="" name="version" minlength="5"  placeholder="Version, eg 2.01"
             maxlength="20" required />
 
     </div>
 
     <div class="form-group">
         <label for="status">Status</label>
-        <input type="text" id="status" class="form-control" name="status" value="1" minlength="1" placeholder="0 or 1"
+        <input type="text" id="status" class="form-control" name="status" value="" minlength="1" placeholder="0 or 1"
             maxlength="1" pattern="[0-1]{1}" required oninvalid="this.setCustomValidity('you must enter 0 or 1')"
             oninput="this.setCustomValidity('')" /></br>
 
