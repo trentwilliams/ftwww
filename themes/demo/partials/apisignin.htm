@@ -1,0 +1,39 @@
+==
+<h1>api sign in</h1>
+<p>this page has just done a sign in wtih the API and recorded </p>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+  //  apiSignIn();
+
+
+    async function apiSignIn() {
+        const json = JSON.stringify({ 'email': 'trent@trentkels.com', 'apipw': 'PASSWORD TO BE ENTERD HERE' });
+        
+
+        let res = await axios.post('http://localhost:3000/user/', json, {
+            headers: {
+                // Overwrite Axios's automatically set Content-Type
+                'Content-Type': 'application/json'
+            }
+
+
+
+        });
+
+
+    }
+
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+</script>

@@ -1,0 +1,6 @@
+plugin:
+    name: 'ftweb.apisignin::lang.plugin.name'
+    description: 'ftweb.apisignin::lang.plugin.description'
+    author: ftweb
+    icon: oc-icon-user-secret
+    homepage: ''

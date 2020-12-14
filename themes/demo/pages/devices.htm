@@ -7,13 +7,10 @@ is_hidden = 0
 
 
 
-
-
 <script>
 
     // my listeners (date inputs and search button)
     $(function () {
-
 
 
         GetDevices();
@@ -32,11 +29,11 @@ is_hidden = 0
 
         //create the http xml object and url
         var xmlhttp = new XMLHttpRequest();
-        //var url = "data/bookings.json?ci=" + searchStart + "&co=" + searchEnd;
         var url = "http://localhost:3000/device/";
 
         //request
         xmlhttp.open("GET", url, true);
+        xmlhttp.setRequestHeader("Authorization", getCookie("lock"));
         xmlhttp.send();
 
         // listen for successful (200)
@@ -47,6 +44,22 @@ is_hidden = 0
                 outPut(myArr);
             }
         }
+    }
+// read cookier for security of api
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
     }
 
     //perform ALAX request for data (as per search paramerets passed)
@@ -54,8 +67,7 @@ is_hidden = 0
 
         //create the http xml object and url
         var xmlhttp = new XMLHttpRequest();
-        //var url = "data/bookings.json?ci=" + searchStart + "&co=" + searchEnd;
-        var url = "http://localhost:3000/device/" + deviceid;
+         var url = "http://localhost:3000/device/" + deviceid;
 
         //request
         xmlhttp.open("GET", url, true);
@@ -72,9 +84,15 @@ is_hidden = 0
     }
 
 
+    //loop though array creating the outpuut string
+    function outPutmessage(string) {
+        var out = "<p>"
+        out += string;
+        out +="</p>"
 
-
-
+        // update result div on page
+        $("#results2").html(out);
+    }
 
 
     //loop though array creating the outpuut string
@@ -92,7 +110,7 @@ is_hidden = 0
 
             //out += arr[i].device;
             //out += "</br>";
-            out += "<tr><td>" + arr[i].deviceId + "</td><td>" + arr[i].device + "</td><td>" + arr[i].version + "</td><td>" + arr[i].status + "</td><td><a href=device?device="+ arr[i].deviceId +">view</a></td></tr>";
+            out += "<tr><td>" + arr[i].deviceId + "</td><td>" + arr[i].device + "</td><td>" + arr[i].version + "</td><td>" + arr[i].status + "</td><td><a href=device?device=" + arr[i].deviceId + ">view</a></td></tr>";
         }
         out += "</tbody></table>";
         // update result div on page
@@ -110,10 +128,10 @@ is_hidden = 0
 <h2>Devices</h2>
 <p>Add a new device <a href="{{ 'adddevice'|page }}">here</a></p>
 <h3>Search devices</h3>
-<p>Only device 1 has data to view</p>
+<p>Only device 1 has data to view, search is disabled at present (while sorting more important security issues)</p>
 
 
-
+<div id="results2"></div>
 <form method="" action="">
     <p>
         <label for="deviceid">Device ID:</label>
@@ -131,7 +149,7 @@ is_hidden = 0
 {% else %}
 <h2>Devices</h2>
 <p>
-You must be signed in to see your devices.
+    You must be signed in to see your devices.
 </p>
 <p>Sign in <a href="{{ 'signin'|page }}">here</a></p>
 {% endif %}

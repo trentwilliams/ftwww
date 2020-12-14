@@ -1,0 +1,67 @@
+title = "devicedelete"
+url = "/devicedelete"
+layout = "default"
+is_hidden = 0
+==
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script type="text/javascript">
+    //delete device
+        //get passed device id
+        var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    var deviceIdPassed = urlParams.get('device')
+    DeleteDevice();
+
+
+
+    // call to return a list of devices
+    //DeleteDevice();
+
+    //perform ALAX request for data (as per search paramerets passed)
+    function DeleteDevice() {
+
+        //create the http xml object and url
+        var xmlhttp = new XMLHttpRequest();
+        //var url = "data/bookings.json?ci=" + searchStart + "&co=" + searchEnd;
+        var url = "http://localhost:3000/device/" + deviceIdPassed;
+
+        //request
+        xmlhttp.open("DELETE", url, true);
+        xmlhttp.setRequestHeader("Authorization", getCookie("lock"));
+        xmlhttp.send();
+
+        // listen for successful (200)
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                console.log(this.responseText);
+                //outPut(myArr);
+            }
+        }
+    }
+
+
+    // read cookier for security of api
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+
+
+</script>
+<h2>Device removed</h2>
+
+<p>View existing devices <a href="{{ 'devices'|page }}">here</a></p>

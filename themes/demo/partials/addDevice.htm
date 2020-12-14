@@ -1,27 +1,23 @@
 description = "add a new device"
 ==
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
 
-
-
-
-
-</script>
 <div>
+
+    <div id="deviceadded"></div>
 
     <!-- <form id="addDevice" name="addDevice" action=""> -->
     <div class="form-group">
         <label class="" for="device">Device</label>
 
-        <input type="text" id="device" class="form-control" value="" name="device" minlength="5" maxlength="20"  placeholder="Device Type / Name"
-            required />
+        <input type="text" id="device" class="form-control" value="" name="device" minlength="5" maxlength="20"
+            placeholder="Device Type / Name" required />
     </div>
 
     <div class="form-group">
         <label for="version">Version</label>
-        <input type="text" id="version" class="form-control" value="" name="version" minlength="5"  placeholder="Version, eg 2.01"
-            maxlength="20" required />
+        <input type="text" id="version" class="form-control" value="" name="version" minlength="5"
+            placeholder="Version, eg 2.01" maxlength="20" required />
 
     </div>
 
@@ -32,38 +28,113 @@ description = "add a new device"
             oninput="this.setCustomValidity('')" /></br>
 
     </div>
-
-
+    <div id="errordevice"></div>
+    <div id="errorversion"></div>
+    <div id="errornumber"></div>
 
 
     <button id="addDevice">Add New Device</button>
+    <div id="deviceadded"></div>
 </div>
 
 
 
-
-
-
 <script type="text/javascript">
-    // my listeners (search button)
+    // my listeners 
     $(function () {
 
-        //click add fire Ajax search
+        //click add fire Ajax add device call then clear form
         $("#addDevice").on("click", function () {
 
+            //var passed = ValidInputs();
 
-            AddDevice();
+            if (ValidInputs()) {
 
-            ClearAddDevice();
+                AddDevice();
+                DeviceAdded(true);
+                ClearAddDevice();
+
+            }
+
+            else {
+                DeviceAdded(false);
+                //DeviceAdded();
+
+            }
+
 
         });
     });
 
+    function ValidInputs() {
+
+
+        var deviceInput = document.getElementById('device').value + "";
+        var versionInput = document.getElementById('version').value + "";
+        var statusInput = document.getElementById('status').value + "";
+
+        var validDevice = ValidText(deviceInput, "errordevice", "Device");
+        var validVersion = ValidText(versionInput, "errorversion", "Version");
+        var validStatus = ValidNumber(statusInput);
+
+        if (validDevice && validVersion && validStatus) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
+
+    function ValidNumber(number) {
+
+        // If x is Not a Number or less than one or greater than 10
+        if (isNaN(number) || number < 0 || number > 1 || number == "") {
+            $("#errornumber").html("<p>Status is invalid (0 or 1)</p>");
+            return false;
+        } else {
+            $("#errornumber").html("");
+            return true;
+        }
+    }
+    function ValidText(string, fieldname, displayname) {
+
+        // If x is Not a Number or less than one or greater than 10
+        if (string.length < 5 || ValidCharacters(string, fieldname, displayname)) {
+            $("#" + fieldname).html("<p>" + displayname + " to be between 5 and 20 characters only letters, numbers and _-</p>");
+            return false;
+        }
+
+        else {
+            $("#" + fieldname).html("");
+            return true;
+        }
+    }
+    function ValidCharacters(deviceInput) {
+        var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
+
+        for (var i = 0; i < deviceInput.length; i++) {
+            if (iChars.indexOf(deviceInput.charAt(i)) != -1) {
+                return true;
+            }
+            else { return false }
+
+        }
+    }
+
+
+
+
+
+
     function ClearAddDevice() {
 
-        document.getElementById('device').value='';
-        document.getElementById('version').value='';
-        document.getElementById('status').value='';
+        document.getElementById('device').value = '';
+        document.getElementById('version').value = '';
+        document.getElementById('status').value = '';
     }
 
     function AddDevice() {
@@ -71,9 +142,46 @@ description = "add a new device"
         const res = axios.post('http://localhost:3000/device/', json, {
             headers: {
                 // Overwrite Axios's automatically set Content-Type
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': getCookie("lock")
             }
         });
+
+
     }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+
+
+
+
+
+    //get the details of the device
+    function DeviceAdded(show) {
+        if (show==true){
+        var device = document.getElementById('device').value;
+        // update result div on page
+        $("#deviceadded").html("<p>New device added: " + device + "<p>");
+        }
+        else{
+            $("#deviceadded").html("<p>Invalid inputs</p>");
+        }
+    }
+
+</script>
 
 </script>

@@ -1,0 +1,99 @@
+title = "signedin"
+url = "/signedin"
+layout = "default"
+is_hidden = 0
+==
+<?php
+function onEnd() {
+
+//$data = json_encode({ 'email': 'trent@trentkels.com', 'apipw': 'pw1234' });
+// this is hardcoded at the moment, but will extract it out (this is serverside script, 
+//i don't want to use a global, i want to grab the current user, this is the only user setup at present )
+
+//server side script to log trent@trentkels.com in to the API server
+$data = array(
+  'email'      => 'trent@trentkels.com',
+  'apipw'    => 'pw1234'
+);
+
+
+    $options = array(
+  'http' => array(
+    'method'  => 'POST',
+    'content' => json_encode( $data ),
+    'header'=>  "Content-Type: application/json\r\n" .
+                "Accept: application/json\r\n"
+    )
+);
+
+// do the request and get the token, write token to client with js down below, 
+// stored locally for requests not needing server side input
+
+$url = "http://localhost:3000/user/";
+$context  = stream_context_create( $options );
+$result = file_get_contents( $url, false, $context );
+
+$obj = json_decode($result);
+$token= $obj->{'token'}; // 12345
+
+//$response = json_decode( $result ,true);    
+//var_dump($response);
+//var_dump($result);
+//$json = '{"foo-bar": 12345}';
+//print $obj->{'message'}; // 12345
+//var_dump($token);
+//echo $json['message'];
+//$json = json_decode($response, true);
+//var_dump($json);
+//echo $json['message'];
+//$content  = stream_context_create($data);
+//$data = 
+//json = JSON.stringify({ 'email': 'trent@trentkels.com', 'apipw': 'pw1234' });
+//$jsonurl = "http://api.wipmania.com/json";
+//$json = file_get_contents($jsonurl);
+//var_dump(json_decode($json));
+//echo "hello world";
+//$text = "Hello World";
+
+?>
+<script type="text/javascript">
+    console.log("&&&&&&&&&&&&");
+    //document.write("<?php echo $token ?>");
+
+// cookie written by PHP server, recieved from API server
+    PHPsetCookie("lock", "Bearer <?php echo $token ?>", 1);
+// this is setting the cookie for the api secuity (this page has logged the user on to the other server)
+    async function PHPsetCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+ }
+    console.log("***********");
+    console.log("***********");
+
+
+
+
+</script>
+<?php
+//echo "LAST PHP";
+
+}
+?>
+==
+
+<h1>You have now signed into the website</h1>
+<h1>You have now signed into the API</h1>
+
+<p>FYI, to authenticate with the api server, it has just done a seperate signin and generated a secuity token... and passed it back to the PHP server to store on the user... 
+  
+</p>
+
+<h1>You are now signed in</h1>
+
+
+
+
+
+

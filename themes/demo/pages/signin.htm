@@ -4,13 +4,29 @@ layout = "default"
 is_hidden = 0
 
 [account]
-redirect = "devices"
+redirect = "signedin"
 paramCode = "code"
 forceSecure = 0
 requirePassword = 0
 ==
 {% if not user %}
+<script>
 
+        setCookie("lock","no",1);
+
+
+    
+
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+
+</script>
     <div class="row">
 
         <div class="col-md-6">
