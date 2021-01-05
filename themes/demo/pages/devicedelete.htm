@@ -24,7 +24,7 @@ is_hidden = 0
         //create the http xml object and url
         var xmlhttp = new XMLHttpRequest();
         //var url = "data/bookings.json?ci=" + searchStart + "&co=" + searchEnd;
-        var url = "http://localhost:3000/device/" + deviceIdPassed;
+        var url = "http://ftapi.azurewebsites.net:80/device/" + deviceIdPassed;
 
         //request
         xmlhttp.open("DELETE", url, true);

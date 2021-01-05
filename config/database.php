@@ -51,20 +51,43 @@ return [
             'database' => 'storage/database.sqlite',
             'prefix'   => '',
         ],
-
+// local db
+        // 'mysql' => [
+        //     'driver'     => 'mysql',
+        //     'engine'     => 'InnoDB',
+        //     'host'       => 'localhost',
+        //     'port'       => 3306,
+        //     'database'   => 'ftdb',
+        //     'username'   => 'root',
+        //     'password'   => '',
+        //     'charset'    => 'utf8mb4',
+        //     'collation'  => 'utf8mb4_unicode_ci',
+        //     'prefix'     => '',
+        //     'varcharmax' => 191,
+        // ],
+//azure db
         'mysql' => [
             'driver'     => 'mysql',
             'engine'     => 'InnoDB',
-            'host'       => 'localhost',
+            'host'       => 'ftdb.mysql.database.azure.com',
             'port'       => 3306,
             'database'   => 'ftdb',
-            'username'   => 'root',
-            'password'   => '',
+            'username'   => 'pixie',
+            'password'   => '1Secret!',
             'charset'    => 'utf8mb4',
             'collation'  => 'utf8mb4_unicode_ci',
             'prefix'     => '',
             'varcharmax' => 191,
+            'options'      => [
+                PDO::MYSQL_ATTR_SSL_CA =>'/DigiCertGlobalRootCA.crt.pem',
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
+            ],
         ],
+
+
+        //$con = mysqli_init(); mysqli_ssl_set($con,NULL,NULL, "{path to CA cert}", NULL, NULL); mysqli_real_connect($conn, "ftdb.mysql.database.azure.com", "pixie", "{your_password}", "{your_database}", 3306, MYSQLI_CLIENT_SSL);
+        //ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}
+
 
         'pgsql' => [
             'driver'   => 'pgsql',

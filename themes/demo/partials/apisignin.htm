@@ -15,7 +15,7 @@
         const json = JSON.stringify({ 'email': 'trent@trentkels.com', 'apipw': 'PASSWORD TO BE ENTERD HERE' });
         
 
-        let res = await axios.post('http://localhost:3000/user/', json, {
+        let res = await axios.post('http://ftapi.azurewebsites.net:80/user/', json, {
             headers: {
                 // Overwrite Axios's automatically set Content-Type
                 'Content-Type': 'application/json'

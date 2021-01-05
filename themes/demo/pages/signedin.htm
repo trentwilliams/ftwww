@@ -29,7 +29,7 @@ $data = array(
 // do the request and get the token, write token to client with js down below, 
 // stored locally for requests not needing server side input
 
-$url = "http://localhost:3000/user/";
+$url = "http://ftapi.azurewebsites.net:80/user/";
 $context  = stream_context_create( $options );
 $result = file_get_contents( $url, false, $context );
 
