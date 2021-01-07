@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'debug' => true,
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,8 @@ return [
     |
     */
 
-    'url' => 'http://localhost/ftwww',
+    //'url' => env('APP_URL', 'https://ftwww.azurewebsites.net'),
+    'url' => env('APP_URL', 'https://ftwww.azurewebsites.net'),
 
     /*
     |--------------------------------------------------------------------------
@@ -107,7 +108,7 @@ return [
     |
     */
 
-    'key' => 'Rp6CFFlGZy4r1dcQHucnPtupKd6U4t8M',
+    'key' => env('APP_KEY', ''),
 
     'cipher' => 'AES-256-CBC',
 
