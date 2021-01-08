@@ -139,7 +139,7 @@ description = "add a new device"
 
     function AddDevice() {
         const json = JSON.stringify({ 'device': document.getElementById('device').value, 'version': document.getElementById('version').value, 'status': document.getElementById('status').value });
-        const res = axios.post('http://ftapi.azurewebsites.net:80/device/', json, {
+        const res = axios.post('https://ftapi.azurewebsites.net/device/', json, {
             headers: {
                 // Overwrite Axios's automatically set Content-Type
                 'Content-Type': 'application/json',

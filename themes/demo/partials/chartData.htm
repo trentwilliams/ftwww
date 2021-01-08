@@ -75,7 +75,7 @@ description = "displays the device data"
     window.onload = function () {
 
         //request the data from the API based on the device ID
-        $.getJSON("http://ftapi.azurewebsites.net:80/sensor/" + deviceIdPassed, addData);
+        $.getJSON("https://ftapi.azurewebsites.net/sensor/" + deviceIdPassed, addData);
 
         // array use dot store data
         var dataPoints = [];
