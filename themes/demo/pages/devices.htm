@@ -65,13 +65,17 @@ is_hidden = 0
     //perform ALAX request for data (as per search paramerets passed)
     function SearchAvaliable(deviceid) {
 
+        console.log(deviceid);
+
         //create the http xml object and url
         var xmlhttp = new XMLHttpRequest();
          var url = "https://ftapi.azurewebsites.net/device/" + deviceid;
 
         //request
         xmlhttp.open("GET", url, true);
+        xmlhttp.setRequestHeader("Authorization", getCookie("lock"));
         xmlhttp.send();
+
 
         // listen for successful (200)
         xmlhttp.onreadystatechange = function () {
