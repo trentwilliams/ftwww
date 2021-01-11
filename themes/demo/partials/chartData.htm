@@ -18,7 +18,7 @@ description = "displays the device data"
         //create the http xml object and url
         var xmlhttp = new XMLHttpRequest();
         //var url = "data/bookings.json?ci=" + searchStart + "&co=" + searchEnd;
-        var url = "http://localhost:3000/device/" + deviceIdPassed;
+        var url = "https://ftapi.azurewebsites.net/device/" + deviceIdPassed;
 
         //request
         xmlhttp.open("GET", url, true);
